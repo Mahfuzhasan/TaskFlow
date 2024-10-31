@@ -1,13 +1,15 @@
 package model;
 
+import java.util.UUID;
+
 public class User {
-	private int id;
+	private UUID id;
 	private String Username;
 	private String Email;
 	private String Password;
 	private Boolean Authenticated;
 
-	public User(int id, String username, String email, String password) {
+	public User(UUID id, String username, String email, String password) {
 		this.setId(id);
 		this.setUsername(username);
 		this.setEmail(email);
@@ -19,23 +21,18 @@ public class User {
 		this.setUsername(username);
 		this.setEmail(email);
 		this.setPassword(password);
+		this.setId(UUID.randomUUID());
 	}
 	
-	public User(String username) {
-		this.setId(1);
-		this.setUsername(username);
-		this.setAuthenticated(true);
-	}
-	
-	public User(int id) {
+	public User(UUID id) {
 		this.setId(id);
 	}
 
-	public int getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

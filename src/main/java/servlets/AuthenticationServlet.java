@@ -36,7 +36,7 @@ public class AuthenticationServlet extends HttpServlet {
             throws ServletException, IOException {	
 
 		// connect to database
-		TaskService dao = new TaskService();
+		UserService dao = new UserService();
 		
 		//check action type
 		if("register".equals(request.getParameter("action"))) {
@@ -44,12 +44,12 @@ public class AuthenticationServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			User user = new User(userName,email,password);
-			dao.createUser(user);
+			dao.register(user);
 			request.getRequestDispatcher("/login.jsp").forward(request, response);
 		} else if ("login".equals(request.getParameter("action"))) {
 			String userName = request.getParameter("username");
 			String password = request.getParameter("password");
-			User user = dao.getUser(userName, password);
+			UUID userid  = dao.authenticate(userName, password);
 			// check database for matching user
 			if(user==null||!user.isAuthenticated()) {
 				//handle error

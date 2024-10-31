@@ -1,10 +1,13 @@
 package model;
 
+import java.util.UUID;
+
 public class Task {
 	private String Title;
 	private Boolean Status;
-	private int UserId;
-	private int TaskId;
+	private UUID UserId;
+	private UUID TaskId;
+	private String Description = "";
 	
 	public String getTitle() {
 		return Title;
@@ -22,35 +25,43 @@ public class Task {
 		Status = status;
 	}
 
-	public int getUserId() {
+	public UUID getUserId() {
 		return UserId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(UUID userId) {
 		UserId = userId;
 	}
 	
-	public int getTaskId() {
+	public UUID getTaskId() {
 		return TaskId;
 	}
 
-	public void setTaskId(int taskId) {
+	public void setTaskId(UUID taskId) {
 		TaskId = taskId;
 	}
 
+	public String getDescription() {
+		return Description;
+	}
 
-	public Task(String title, Boolean status, int id) {
+	public void setDescription(String description) {
+		Description = description;
+	}
+	
+	public Task(String title, Boolean status, UUID id) {
 		this.setTitle(title);
 		this.setStatus(status);
 		this.setUserId(id);
 	}
 	
-	public Task(String title, int id) {
+	public Task(String title, UUID id) {
 		this.setTitle(title);
 		this.setStatus(true);
 		this.setUserId(id);
+		this.TaskId = UUID.randomUUID();
 	}
-	public Task(String title, int userId, int taskId) {
+	public Task(String title, UUID userId, UUID taskId) {
 		this.setTitle(title);
 		this.setUserId(userId);
 		this.setTaskId(taskId);
@@ -58,5 +69,11 @@ public class Task {
 	}
 	public Task() {
 		
+	}
+	public Task(String title, String des, Boolean status, UUID userId) {
+		this.setTitle(title);
+		this.setDescription(des);
+		this.setStatus(status);
+		this.setUserId(userId);
 	}
 }

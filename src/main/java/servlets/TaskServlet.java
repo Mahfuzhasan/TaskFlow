@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,19 +49,25 @@ public class TaskServlet extends HttpServlet {
 		TaskService dao = new TaskService();
 		
 		if(tasks.Count()==0) {
-			tasks = dao.getTasks(user.getId());
+			List<Task> taskslist = dao.getTasksByUser(user.getId());
+			LinkedHashMap<UUID,Task> tasksMap = new LinkedHashMap<UUID,Task>();
+			for(Task task:taskslist) {
+				tasksMap.put(task.getTaskId(), task);
+			}
+			tasks.setTasks(tasksMap);
 		}
 		//check action type
 		if(action==null) {
-			Task task = dao.Create(title,user.getId());
+			Task task = new Task(title,user.getId());
+			dao.createTask(task);
 			tasks.createTask(task);
 		} else if (action.equals("update")) {
-			int taskId = Integer.valueOf(request.getParameter("taskId"));
-			dao.update(taskId, user.getId());
+			UUID taskId = UUID.fromString(request.getParameter("taskId"));
+			dao.markTaskComplete(taskId);
 			tasks.updateTask(taskId);
 		} else if (action.equals("delete")) {
-			int taskId = Integer.valueOf(request.getParameter("taskId"));
-			dao.delete(taskId,user.getId());
+			UUID taskId = UUID.fromString(request.getParameter("taskId"));
+			dao.deleteTask(taskId);
 			tasks.deleteTask(taskId);
 		} 
 		Map newtasklist = tasks.getTasks();

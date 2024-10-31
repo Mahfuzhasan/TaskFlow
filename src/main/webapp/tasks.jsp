@@ -6,6 +6,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Map.Entry" %>
 <%@ page import="inmemory.Tasks" %>
+<%@ page import="java.util.UUID;" %>
 
 <%
     // Retrieve the logged-in user from the session, redirect to login if not authenticated
@@ -15,7 +16,7 @@
         return;
     }
     // Retrieve the user's tasks passed from TaskServlet
-    Map<Integer, Task> tasks = (Map<Integer, Task>) request.getAttribute("tasks");
+    Map<UUID, Task> tasks = (Map<UUID, Task>) request.getAttribute("tasks");
 %>
 
 <html>
@@ -39,7 +40,7 @@
     <h3>Your Tasks</h3>
     <!-- Display list of tasks with options to mark as complete/incomplete and delete -->
     <ul>
-        <% for (Map.Entry<Integer, Task> entry : tasks.entrySet()) { %>
+        <% for (Map.Entry<UUID, Task> entry : tasks.entrySet()) { %>
             <li>
                 <strong><%= entry.getValue().getTitle() %></strong>
                 

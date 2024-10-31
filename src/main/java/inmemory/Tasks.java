@@ -2,18 +2,19 @@ package inmemory;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import model.Task;
-
+// tasks collection bean
 public class Tasks {
 	
-	private Map<Integer,Task> tasks;
+	private Map<UUID, Task> tasks;
 	
 	public Tasks() {
-		this.tasks = new LinkedHashMap<Integer,Task>();
+		this.tasks = new LinkedHashMap<UUID,Task>();
 	}
-	
-	public void updateTask(int id) {
+	// comment
+	public void updateTask(UUID id) {
 		Task task = tasks.get(id);
 		if (task.isStatus()) {
 			task.setStatus(false);
@@ -22,7 +23,7 @@ public class Tasks {
 		}
 	}
 	
-	public void deleteTask(int id) {
+	public void deleteTask(UUID id) {
 		tasks.remove(id);
 	}
 	
@@ -30,15 +31,15 @@ public class Tasks {
 		this.tasks.put(task.getTaskId(), task);
 	}
 	
-	public Map<Integer, Task> getTasks(){
+	public Map<UUID, Task> getTasks(){
 		return this.tasks;
 	}
 	
-	public void setTasks(LinkedHashMap<Integer, Task> tasks) {
+	public void setTasks(LinkedHashMap<UUID, Task> tasks) {
 		this.tasks = tasks;
 	}
 
-	public Task getTask(int id) {
+	public Task getTask(UUID id) {
 		return tasks.get(id);
 	}
 
