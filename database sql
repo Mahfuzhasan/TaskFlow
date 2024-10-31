@@ -1,0 +1,23 @@
+CREATE DATABASE IF NOT EXISTS taskflowdb;
+ 
+ 
+USE taskflowdb;
+ 
+ 
+CREATE TABLE IF NOT EXISTS users (
+    id CHAR(36) PRIMARY KEY,
+    username VARCHAR(50),
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    status BOOLEAN DEFAULT TRUE  -- Default status set to TRUE for testing should be FALSE
+);
+ 
+ 
+CREATE TABLE IF NOT EXISTS tasks (
+    id CHAR(36) PRIMARY KEY,
+    title VARCHAR(100),
+    description TEXT,
+    status BOOLEAN DEFAULT TRUE,  
+    userId CHAR(36), 
+    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+);
