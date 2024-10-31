@@ -13,19 +13,24 @@ import model.User;
 public class UserService {
     private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
 
-    public boolean authenticate(String email, String password) {
-        String query = "SELECT id FROM users WHERE email = ? AND password = ?";
+    public User authenticate(String email, String password) {
+        String query = "SELECT * FROM users WHERE email = ? AND password = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, email);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
-            UUID id = (UUID) rs.getObject(0);
-            return rs.next();
+
+            if (rs.next()) {
+                UUID userId = UUID.fromString(rs.getString("id"));
+                String username = rs.getString("username");
+                Boolean status = rs.getBoolean("status"); // Assuming a 'status' column exists in the users table
+                return new User(userId, username, email, password, status);
+            }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error authenticating user: " + e.getMessage(), e);
-            return false;
         }
+        return null; // Return null if authentication fails
     }
 
     public boolean register(User user) {

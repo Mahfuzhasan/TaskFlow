@@ -27,6 +27,14 @@ public class User {
 	public User(UUID id) {
 		this.setId(id);
 	}
+	
+	public User(UUID id, String username, String email, String password,Boolean status) {
+		this.setId(id);
+		this.setUsername(username);
+		this.setEmail(email);
+		this.setPassword(password);
+		this.setAuthenticated(status);
+	}
 
 	public UUID getId() {
 		return id;

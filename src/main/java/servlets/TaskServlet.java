@@ -1,7 +1,5 @@
 package servlets;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import inmemory.Tasks;
 import model.Task;
 import model.User;
+import service.DBService;
 import service.TaskService;
 
 
@@ -46,7 +45,7 @@ public class TaskServlet extends HttpServlet {
 		user = (User)session.getAttribute("user");
 		
 		// connect to database
-		TaskService dao = new TaskService();
+		DBService dao = new DBService();
 		
 		if(tasks.Count()==0) {
 			List<Task> taskslist = dao.getTasksByUser(user.getId());
